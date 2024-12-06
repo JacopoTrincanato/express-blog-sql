@@ -5,17 +5,30 @@ const posts = require('../db/db.js');
 const fs = require('fs');
 
 //importo connection
-//const connection = require('../db/blogconnection.js');
-
-//commento index e la ricreo restituendo un JSON con la lista dei post
-
+const connection = require('../db/blogconnection.js');
 
 //ricreo il nuovo index
 const index = (req, res) => {
+
+    /*commento il codice
     res.json({
         data: posts,
         count: posts.length
-    });
+    });*/
+
+    //recupero i post dal database
+    connection.query(sql, (err, results) => {
+
+        //ritorno un errore se è presente
+        if (err) return res.status(500).json({ error: err })
+
+        const responseData = {
+            data: results,
+            counter: results.length
+        }
+
+        res.status(200).json(responseData)
+    })
 };
 
 //creo show
