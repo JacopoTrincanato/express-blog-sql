@@ -5,7 +5,7 @@ const posts = require('../db/db.js');
 const fs = require('fs');
 
 //importo connection
-const connection = require('../db/blogconnection.js');
+//const connection = require('../db/blogconnection.js');
 
 //commento index e la ricreo restituendo un JSON con la lista dei post
 
