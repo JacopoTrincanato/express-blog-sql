@@ -17,10 +17,10 @@ const notFound = require('./middlewares/notFound.js');
 const loggerMiddleware = require('./middlewares/loggerMiddleware.js');
 
 //richiamo la variabile d'ambiente HOST dal file .env
-const HOST = process.env.HOST;
+const HOST = process.env.DB_HOST;
 
 //richiamo la variabile d'ambiente PORT dal file .env
-const PORT = process.env.PORT;
+const PORT = process.env.DB_PORT;
 
 //gestisco i file statici
 app.use(express.static('public'));

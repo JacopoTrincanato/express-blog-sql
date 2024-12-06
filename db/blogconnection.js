@@ -3,11 +3,11 @@ const mysql = require('mysql2')
 
 //creo una costante per creare le connessione
 const connection = mysql.createConnection({
-    host: process.env.HOST,
-    port: process.env.PORT,
-    password: process.env.PASSWORD,
-    user: 'root',
-    database: 'blog_db'
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    password: process.env.DB_PASSWORD,
+    user: process.env.DB_USER,
+    database: process.env.DB_DATABASE
 })
 
 connection.connect(err => {
