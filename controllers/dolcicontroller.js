@@ -42,6 +42,14 @@ const show = (req, res) => {
     //prepara la query sql
     const sql = `SELECT * FROM posts WHERE id = ?`
 
+    //preparo la query con il procedimento da fare per recuperare i tag
+    const tagsSql = `
+    SELECT tags.*
+    FROM tags
+    JOIN post_tag ON tags.id = post_tag.tag_id
+    WHERE post_tag.tag_id = ?
+    `
+
     //eseguo la query
     connection.query(sql, [id], (err, results) => {
         if (err) return res.status(500).json({
@@ -52,11 +60,21 @@ const show = (req, res) => {
             error: '404! not found'
         })
 
-        const responseData = {
-            data: results[0]
-        }
+        const post = results[0]
 
-        res.status(200).json(responseData)
+        //esegui la seconda query
+        connection.query(tagsSql, [id], (err, tagsResults) => {
+            if (err) return res.status(500).json({ error: err })
+
+            post.tags = tagsResults
+
+            const responseData = {
+                data: post,
+            }
+
+            res.status(200).json(responseData)
+        })
+
     })
 
     //uso find per trovare e visualizzare il post in base al suo slug
