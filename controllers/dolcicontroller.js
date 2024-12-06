@@ -36,8 +36,31 @@ const index = (req, res) => {
 //creo show
 const show = (req, res) => {
 
+    //scrivi il nuovo codice
+    const id = req.params.id
+
+    //prepara la query sql
+    const sql = `SELECT * FROM posts WHERE id = ?`
+
+    //eseguo la query
+    connection.query(sql, [id], (err, results) => {
+        if (err) return res.status(500).json({
+            error: err
+        })
+
+        if (!results[0]) return res.status(404).json({
+            error: '404! not found'
+        })
+
+        const responseData = {
+            data: results[0]
+        }
+
+        res.status(200).json(responseData)
+    })
+
     //uso find per trovare e visualizzare il post in base al suo slug
-    const post = posts.find(post => post.slug === req.params.slug)
+    /*const post = posts.find(post => post.slug === req.params.slug)
 
     //restituisci un messaggio di errore se non trova il post
     if (!post) {
@@ -48,7 +71,7 @@ const show = (req, res) => {
     //se lo trova, restituisci uno status 200
     return res.status(200).json({
         data: post
-    });
+    });*/
 
 };
 

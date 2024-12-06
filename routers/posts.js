@@ -13,16 +13,16 @@ const dolciController = require('../controllers/dolcicontroller.js');
 router.get('/', dolciController.index);
 
 //show
-router.get('/:slug', dolciController.show);
+router.get('/:id', dolciController.show);
 
 //store
 router.post('/', dolciController.store);
 
 //update
-router.put('/:slug', dolciController.update);
+router.put('/:id', dolciController.update);
 
 //destroy
-router.delete('/:slug', dolciController.destroy);
+router.delete('/:id', dolciController.destroy);
 
 //esporto router
 module.exports = router
