@@ -4,32 +4,14 @@ const posts = require('../db/db.js');
 //aggiungo fs
 const fs = require('fs');
 
+//importo connection
+const connection = require('../db/blogconnection.js');
+
 //commento index e la ricreo restituendo un JSON con la lista dei post
-/*const index = (req, res)=>{
 
-    //cero una ul
-    let ul = `<ul>`;
-    posts.forEach(post=>{
-
-        //inserisco gli li nell'ul
-        ul += `
-            <li>
-                <h2>${post.title}</h2>
-                <p>${post.content}</p>
-                <img src="/img/${post.image}" alt="${post.title}">
-                <p><strong>Tags:</strong> ${post.tags.join(', ')}</p>
-            </li>
-        `;
-        
-    })
-
-    ul += `</ul>`;
-
-    res.status(200).send(ul)
-}*/
 
 //ricreo il nuovo index
-const index = (req, res)=>{
+const index = (req, res) => {
     res.json({
         data: posts,
         count: posts.length
@@ -37,7 +19,7 @@ const index = (req, res)=>{
 };
 
 //creo show
-const show = (req, res)=>{
+const show = (req, res) => {
 
     //uso find per trovare e visualizzare il post in base al suo slug
     const post = posts.find(post => post.slug === req.params.slug)
@@ -52,15 +34,15 @@ const show = (req, res)=>{
     return res.status(200).json({
         data: post
     });
-    
+
 };
 
 //creo store
-const store = (req, res)=>{
+const store = (req, res) => {
 
     console.log(req.body);
-   // console.log(req)
-    
+    // console.log(req)
+
 
     //creo il nuovo post
     const post = {
@@ -70,7 +52,7 @@ const store = (req, res)=>{
         image: req.body.image,
         tags: req.body.tags
     };
-    
+
     //pusho il nuovo post nell'array
     posts.push(post);
 
@@ -87,7 +69,7 @@ const store = (req, res)=>{
 };
 
 //creo update
-const update = (req, res)=>{
+const update = (req, res) => {
 
     //uso find per trovare e visualizzare il post in base al suo slug
     const post = posts.find(post => post.slug === req.params.slug);
@@ -105,7 +87,7 @@ const update = (req, res)=>{
     post.content = req.body.content;
     post.image = req.body.image;
     post.tags = req.body.tags;
-    
+
 
     //Aggiorno l'array posts con i nuovi dati
     fs.writeFileSync('./db/db.js', `const posts = ${JSON.stringify(posts, null, 4)};\n\nmodule.exports = posts;`);
@@ -116,23 +98,23 @@ const update = (req, res)=>{
         data: posts,
         count: posts.length
     });
-    
+
 };
 
 //creo destroy
-const destroy = (req, res)=> {
-    
+const destroy = (req, res) => {
+
     //uso find per trovare e visualizzare il post in base al suo slug
     const post = posts.find(post => post.slug === req.params.slug);
     console.log(post);
-    
+
     //verifico se il post esiste
     if (!post) {
         return res.status(404).json({
             error: `404! not found`
         });
     };
-    
+
     //cancello il post
     const newPosts = posts.filter(post => post.slug !== req.params.slug);
 
@@ -148,7 +130,7 @@ const destroy = (req, res)=> {
 };
 
 //esporto index, show, store, update e destroy
-module.exports = { 
+module.exports = {
     index,
     show,
     store,

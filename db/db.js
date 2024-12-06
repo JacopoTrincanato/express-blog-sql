@@ -1,4 +1,4 @@
-const posts = [
+/*const posts = [
     {
         "title": "Ciambellone",
         "slug": "ciambellone",
@@ -59,4 +59,4 @@ const posts = [
     }
 ];
 
-module.exports = posts;
+module.exports = posts;*/
