@@ -16,6 +16,8 @@ const index = (req, res) => {
         count: posts.length
     });*/
 
+    //creo la costante sql
+    const sql = 'SELECT * FROM posts'
     //recupero i post dal database
     connection.query(sql, (err, results) => {
 
