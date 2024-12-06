@@ -119,8 +119,22 @@ const update = (req, res) => {
 //creo destroy
 const destroy = (req, res) => {
 
+    //creo una costante per l'id
+    const id = req.params.id
+
+    //creo un costante sql
+    const sql = 'DELETE FROM posts WHERE id = ?'
+
+    //preparo la query per eliminare un post
+    connection.query(sql, [id], (err, results) => {
+        if (err) return res.status(500).json({ error: err })
+
+        if (results.affectedRows === 0) return res.status(404).json({ error: "Non esiste un post con quell' id" })
+    })
+
+    return res.status(204).json({ status: 204 })
     //uso find per trovare e visualizzare il post in base al suo slug
-    const post = posts.find(post => post.slug === req.params.slug);
+    /*const post = posts.find(post => post.slug === req.params.slug);
     console.log(post);
 
     //verifico se il post esiste
@@ -141,7 +155,7 @@ const destroy = (req, res) => {
         status: 201,
         data: newPosts,
         count: newPosts.length
-    });
+    });*/
 };
 
 //esporto index, show, store, update e destroy
